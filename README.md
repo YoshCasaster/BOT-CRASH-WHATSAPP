@@ -56,21 +56,21 @@
 - MENU
 <p align="left">
   <a href="https://google.com">
-    <img src="https://ibb.co.com/6DCzgsQ" />
+    <img src="./menu.jpg" />
   </a>
 </p>
 
 - ALLMENU MENU
 <p align="left">
   <a href="https://google.com">
-    <img src="https://ibb.co.com/DMDRwDw" />
+    <img src="./allmenu.jpg" />
   </a>
 </p>
 
 - BUG MENU
 <p align="left">
   <a href="https://google.com">
-    <img src="https://ibb.co.com/WgNBfNZ" />
+    <img src="./bugmenu.jpg" />
   </a>
 </p>
 
