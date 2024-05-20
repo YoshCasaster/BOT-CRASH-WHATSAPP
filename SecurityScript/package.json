@@ -1,0 +1,22 @@
+{
+  "name": "securityscript",
+  "version": "1.0.0",
+  "description": "A security script module for checking and validating script approval.",
+  "main": "node scriptSecurity.js",
+  "dependencies": {
+    "ansi-styles": "^4.3.0",
+    "chalk": "^4.1.2",
+    "color-convert": "^2.0.1",
+    "color-name": "^1.1.4",
+    "has-flag": "^4.0.0",
+    "supports-color": "^7.2.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "start": "node case.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": ["security", "script", "approval"],
+  "author": "zaenishi",
+  "license": "ISC"
+}
