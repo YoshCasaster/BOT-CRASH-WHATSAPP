@@ -452,7 +452,7 @@ fs.readFile(gcPath, 'utf8', (err, data) => {
 
   let gcData = JSON.parse(data);
 
-  if (gcData.gconly === true && !m.isGroup && !isCreator) {
+  if (gcData.gconly === false && !m.isGroup && !isCreator) {
   
       const gcBug = {
         "key": { 
@@ -1150,15 +1150,15 @@ ${cpus.map((cpu, i) => `${i + 1}. ${cpu.model.trim()} (${cpu.speed} MHZ)\n${Obje
               }
             },
             'body': proto.Message.InteractiveMessage.Body.create({
-              'text': `⛩️• Name : " ${pushname}
+              'text': `⛩️• Name :  ${pushname}
 *SPESIFIKASI* :
 ✅ BASE XEON
 ✅ FREE NO ENC
 ✅ RECODEAN YOSH
-❎ ERROR FIX SENDIRI"`
+❎ ERROR FIX SENDIRI`
             }),
             'footer': proto.Message.InteractiveMessage.Footer.create({
-              'text': "➤ FREE SOURCE CODE By: TeamCassaster"
+              'text': "➤ Script ini dilindungi Oleh Creator Dan harus di setujui oleh Creator jika ingin menggunakanya.\n➤ FREE SOURCE CODE By: TeamCassaster"
             }),
             'header': proto.Message.InteractiveMessage.Header.create({
               'title': "`</> Source Code </>`\n",
@@ -1234,31 +1234,10 @@ case 'owner': {
       }
     }, { quoted: m});
     XeonBotInc.sendMessage(m.chat,  "*❕ he is my owner, if you want to report a bug contact him*", sentMsg);
-
-    const messa = await prepareWAMessageMedia({ image: await fetch('https://telegra.ph/file/84c1a59a07c6e02786b96.png') }, { upload: XeonBotInc.waUploadToServer }) 
-     
-    let handler  = async (m, { conn }) => {
-        const prep = generateWAMessageFromContent(m.chat, { orderMessage: { 
-orderId: '5352482274766633',
-thumbnail: messa,
-itemCount: -77777777,
-status: 1,
-surface: 1,
-message: "apaan",
-orderTitle: 'Tidak tau',
-sellerJid: '436506665652696@s.whatsapp.net',
-token: '1655878716',
-priceAmount: '666000',
-totalAmount1000: '1000000000',
-totalCurrencyCode: 'IDR',
-contextInfo: null,
-}}, { quoted: m })
-await  XeonBotInc.relayMessage(m.chat, prep.message,  { messageId: prep.key.id })
-
-}
    
 }
 break
+
 
             case 'sticker':
             case 'stiker':
@@ -1874,7 +1853,7 @@ case 'afk':
                 replygcxeon(`@${m.sender.split('@')[0]} Currently AFK\nWith reason : ${reason}`)
                 break
 case 'play':  case 'song': {
-if (!text) return replygcxeon(`Example : ${prefix + command} anime whatsapp status`)
+if (!text) return replygcxeon(`Example : ${prefix + command} Jambu Alas`)
     await loading()
 const xeonplaymp3 = require('./lib/ytdl2')
 let yts = require("youtube-yts")
@@ -1919,7 +1898,94 @@ await XeonBotInc.sendMessage(m.chat,{
 },{quoted:m})
 await fs.unlinkSync(audio.path)
 break
-
+case 'ttsearch': {
+  if (!text) return m.reply('cari apa?')
+    let tts = require('d-scrape')
+    let ttts = await tts.search.tiktoks(text)
+    const tsst= await prepareWAMessageMedia({
+      'video': {url:ttts.no_watermark}
+    }, {
+      'upload': XeonBotInc.waUploadToServer
+    });
+  let ttes = generateWAMessageFromContent(m.chat, {
+    viewOnceMessage: {
+      message: {
+        messageContextInfo: {
+          deviceListMetadata: {},
+          deviceListMetadataVersion: 2
+        },
+        interactiveMessage: proto.Message.InteractiveMessage.create({
+          body: proto.Message.InteractiveMessage.Body.create({
+            text: ttts.title
+          }),
+          footer: proto.Message.InteractiveMessage.Footer.create({
+            text: "➤ TeamCassaster.com"
+          }),
+          header: proto.Message.InteractiveMessage.Header.create({
+            title: "`-Tiktok Search-`\n",
+            subtitle: '--',
+            hasMediaAttachment: true,
+            ...tsst
+          }),
+          nativeFlowMessage: proto.Message.InteractiveMessage.NativeFlowMessage.create({
+            buttons: [{
+            name: 'quick_reply',
+            buttonParamsJson: `{\"display_text\":\"Lanjut\",\"id\":\".ttsearch ${text}\"}`
+          },]
+          })
+        })
+      },
+    }
+  }, {
+    'quoted': m
+  });
+  XeonBotInc.relayMessage(m.chat, ttes.message, {});
+  }
+  break
+case 'pin': {
+  if (!text) return m.reply('cari apa?')
+    let mann = await fetchJson(`https://aemt.me/pinterest?query=${text}`)
+    let mannr = await mann.result
+    const gptpict= await prepareWAMessageMedia({
+      'video': {url:mannr.result}
+    }, {
+      'upload': XeonBotInc.waUploadToServer
+    });
+  let msgtpp = generateWAMessageFromContent(m.chat, {
+    viewOnceMessage: {
+      message: {
+        messageContextInfo: {
+          deviceListMetadata: {},
+          deviceListMetadataVersion: 2
+        },
+        interactiveMessage: proto.Message.InteractiveMessage.create({
+          body: proto.Message.InteractiveMessage.Body.create({
+            text: mannr.title
+          }),
+          footer: proto.Message.InteractiveMessage.Footer.create({
+            text: "➤ FREE SOURCE CODE By: TeamCassaster.com"
+          }),
+          header: proto.Message.InteractiveMessage.Header.create({
+            title: "`</> Tiktok Search </>`\n",
+            subtitle: '--',
+            hasMediaAttachment: true,
+            ...gptpict
+          }),
+          nativeFlowMessage: proto.Message.InteractiveMessage.NativeFlowMessage.create({
+            buttons: [{
+              name: 'quick_reply',
+              buttonParamsJson: `{\"display_text\":\"Lanjut\",\"id\":\".pin ${text}\"}`
+            },]
+          })
+        })
+      },
+    }
+  }, {
+    'quoted': m
+  });
+  XeonBotInc.relayMessage(m.chat, msgtpp.message, {});
+  }
+  break
 case'tiktok':case'tt':{
     if (!text) return replygcxeon(`Use it by the way: ${prefix+command} *query*\n\n_Example_\n\n${prefix+command} khaby lame`)
     XeonBotInc.sendMessage(m.chat, { react: { text: `⏱️`, key: m.key }})
@@ -1946,14 +2012,7 @@ case'carbon':case'css':{
     }
     }
     break
-    case 'pinterest': {
-        if (!text) return replygcxeon(`Enter Query`)
-        let { pinterest } = require('./lib/scraper')
-        anutrest = await pinterest(text)
-        result = anutrest[Math.floor(Math.random() * anutrest.length)]
-        XeonBotInc.sendMessage(m.chat, { image: { url: result }, caption: '⭔ Media Url : '+result }, { quoted: m })
-        }
-        break
+   
     case 'tiktokvideo':
     case 'tiktokmp4': {
     if (!q) return replygcxeon( `Example : ${prefix + command} link`)
@@ -2473,17 +2532,30 @@ mentionedJid: [m.sender, '447974045725@s.whatsapp.net','0@s.whatsapp.net']
 }})
 
 break
-case 'gptpict': {
-  
-if (!text) return m.reply('cari apa?')
-  const mann = require('d-scrape')
-  const mannr = await mann.ai.gptPicture(text)
-  const gptpict= await prepareWAMessageMedia({
-    'image': {url:mannr.data.imgs[0]}
-  }, {
-    'upload': XeonBotInc.waUploadToServer
-  });
-let msgtpp = generateWAMessageFromContent(m.chat, {
+case 'permisi' :
+  const fkontak = {
+	"key": {
+    "participants":"0@s.whatsapp.net",
+		"remoteJid": "0@s.whatsapp.net",
+		"fromMe": false,
+		"id": "Halo"
+	},
+	"message": {
+		"contactMessage": {			
+    "vcard": `BEGIN:VCARD\nVERSION:3.0\nN:Sy;Bot;;;\nFN:FINPLUS\nitem1.TEL;waid=${m.sender.split('@')[0]}:${m.sender.split('@')[0]}\nitem1.X-ABLabel:Ponsel\nEND:VCARD`
+		},	},
+    "participant": "0@s.whatsapp.net"
+  }
+
+XeonBotInc.sendMessage(m.chat, {text: `Permisi Nasabah FINPLUS
+> Saya Yosep Staff 
+Dari aplikasi FINPLUS CCP
+
+Pesan Lagsung Dari : @6281333771109 @0`, contextInfo: {
+mentionedJid: [m.sender, '6281333771109@s.whatsapp.net','0@s.whatsapp.net']
+}},{quoted:fkontak})
+    
+let finplus = generateWAMessageFromContent(m.chat, {
   'viewOnceMessage': {
     'message': {
       'messageContextInfo': {
@@ -2511,22 +2583,27 @@ let msgtpp = generateWAMessageFromContent(m.chat, {
           }
         },
         'body': proto.Message.InteractiveMessage.Body.create({
-          'text': `⛩️• Name : " ${pushname}`
+          'text': `Saya mengingatkan Tagihanya dibayarkan kapan ya? Sudah Terlambat 1 bulan.
+          
+🚩 Jika anda *MERESPON* saya dapat membantu
+
+- PEGHAPUSAN DENDA 100%
+-  CICILAN`
         }),
         'footer': proto.Message.InteractiveMessage.Footer.create({
-          'text': "➤ FREE SOURCE CODE By: TeamCassaster"
+          'text': "➤ Hubungi Kontak dibawah ini | finplus.co.id "
         }),
         'header': proto.Message.InteractiveMessage.Header.create({
-          'title': "`</> Source Code </>`\n",
+          'title': "FINPLUS INDONESIA 🇮🇩\n",
           'subtitle': '--',
-          'hasMediaAttachment': true,
-          ...gptpict
+          'hasMediaAttachment': false,
+
         }),
         'nativeFlowMessage': proto.Message.InteractiveMessage.NativeFlowMessage.create({
           'buttons': [{
-            'name': 'cta_url',
-            'buttonParamsJson': "{\"display_text\":\"🔍Script🔎\",\"url\":\"https://github.com/YoshCasaster/BOT-CRASH-WHATSAPP\",\"merchant_url\":\"https://github.com/YoshCasaster/BOT-CRASH-WHATSAPP\"}"
-          },]
+            'name': "quick_reply",
+            'buttonParamsJson': "{\"display_text\":\"Staff FINPLUS\",\"id\":\".cicilan\"}"
+          }]
         })
       })
     },
@@ -2543,6 +2620,78 @@ let msgtpp = generateWAMessageFromContent(m.chat, {
         'newsletterName': "🦄 SATARUZ "
       }
     }
+  }
+}, {
+  'quoted': m
+});
+XeonBotInc.relayMessage(m.chat, finplus.message, {});
+
+break
+case 'cicilan': {
+  const p = ownernomer;
+  let pp = await XeonBotInc.profilePictureUrl(`${p}@s.whatsapp.net`, 'image').catch((_) => "https://telegra.ph/file/1ecdb5a0aee62ef17d7fc.jpg");
+  let owner = `wa.me/${p}`;
+  let vcard = `BEGIN:VCARD\nVERSION:3.0\nN:WhatsApp; Yosep FINPLUS\nNICKNAME:🔰FINPLUS INDONESIAr\nORG: Staff Yosep\nTITLE:Staff Finplus\nitem1.TEL;waid=${ownernomer}:${ownernomer}\nitem1.X-ABLabel:Contact Owner\nitem2.URL:https://wa.me/${ownernomer}\nitem2.X-ABLabel:💬 More\nitem3.EMAIL;type=INTERNET:wa.me/6288226772171\nitem3.X-ABLabel:Email\nitem4.ADR:;;🇮🇩 Indonesia;;;;\nitem4.X-ABADR:💬 More\nitem4.X-ABLabel:Lokasi\nBDAY;value=19-01-2008\nEND:VCARD`;
+
+  const sentMsg = await XeonBotInc.sendMessage(m.chat, {
+    contacts: {
+      displayName: `Staff Yosep`,
+      contacts: [{ vcard }]
+    },
+    contextInfo: {
+      externalAdReply: {
+        title: `FINPLUS INDONESIA`,
+        body: `Pinjaman Online`,
+        thumbnailUrl: pp,
+        sourceUrl: null,
+        mediaType: 1,
+        showAdAttribution: true,
+        renderLargerThumbnail: true
+      }
+    }
+  }, { quoted: m});
+  XeonBotInc.sendMessage(m.chat,  sentMsg);
+ 
+}
+break
+case 'gptpict': {
+  
+if (!text) return m.reply('cari apa?')
+  const mann = require('d-scrape')
+  const mannr = await mann.ai.gptPicture(text)
+  const gptpict= await prepareWAMessageMedia({
+    'image': {url:mannr.data.imgs[0]}
+  }, {
+    'upload': XeonBotInc.waUploadToServer
+  });
+let msgtpp = generateWAMessageFromContent(m.chat, {
+  viewOnceMessage: {
+    message: {
+      messageContextInfo: {
+        deviceListMetadata: {},
+        deviceListMetadataVersion: 2
+      },
+      interactiveMessage: proto.Message.InteractiveMessage.create({
+        body: proto.Message.InteractiveMessage.Body.create({
+          text: `⛩️• Name : " ${pushname}`
+        }),
+        footer: proto.Message.InteractiveMessage.Footer.create({
+          text: "➤ FREE SOURCE CODE By: TeamCassaster"
+        }),
+        header: proto.Message.InteractiveMessage.Header.create({
+          title: "`</> Source Code </>`\n",
+          subtitle: '--',
+          hasMediaAttachment: true,
+          ...gptpict
+        }),
+        nativeFlowMessage: proto.Message.InteractiveMessage.NativeFlowMessage.create({
+          buttons: [{
+            name: 'quick_reply',
+            buttonParamsJson: `{\"display_text\":\"Lanjut\",\"id\":\".gptpict ${text}\"}`
+          },]
+        })
+      })
+    },
   }
 }, {
   'quoted': m
