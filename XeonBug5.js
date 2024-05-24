@@ -25,6 +25,8 @@ let afk = require("./lib/afk");
 const { addPremiumUser, getPremiumExpired, getPremiumPosition, expiredCheck, checkPremiumUser, getAllPremiumUser } = require('./lib/premiun')
 const { fetchBuffer, buffergif } = require("./lib/myfunc2")
 const { temporary, temmp } = require('./tempor')
+const { searchPinterest } = require('./lib/scrape'); // Sesuaikan dengan lokasi modul lib
+const { searchPinterest: searchPinterestScraper } = require('./lib/scrape'); // Sesuaikan dengan lokasi modul Scraper
 
 //bug database
 const { xeontext1 } = require('./69/xeontext1')
@@ -775,7 +777,7 @@ fs.readFile(gcPath, 'utf8', (err, data) => {
             case 'delete':
             case 'del': {
                 if (!isCreator) return replygcxeon(mess.done)
-                if (!m.quoted) throw false
+                if (!m.quoted) return false
                 let {
                     chat,
                     fromMe,
@@ -1942,12 +1944,56 @@ case 'ttsearch': {
   XeonBotInc.relayMessage(m.chat, ttes.message, {});
   }
   break
+  case 'pinterest':
+    case 'pinn':
+      if (!args || args.length < 1) {
+        return m.reply(("Rumah")); 
+      }
+
+      let responseu = args.join(' ').split('|');
+      let query = responseu[0];
+      let count = parseInt(responseu[1]);
+      XeonBotInc.sendMessage(m.chat, { react: { text: `⏱️`, key: m.key }})
+      if (!count) {
+        try {
+          var yss = await searchPinterest(query);
+          let url = yss.result[Math.floor(Math.random() * yss.result.length)];
+          XeonBotInc.sendMessage(m.chat, {image: {url: url}, caption: `${query}`});
+        } catch (error) {
+          console.log(error);
+          return replygcxeon(m.chat, 'Terjadi kesalahan saat menjalankan perintah.', m);
+        }
+      } else {
+        if (count > 10) return m.reply('*Maximun 10 request*');
+
+        try {
+          let res = await searchPinterestScraper(query);
+          let images = res.result;
+
+          // Batasi count untuk tidak melebihi panjang array images
+          count = Math.min(count, images.length);
+
+          for (let i = 0; i < count; i++) {
+            let image = images[i]; // Mengambil gambar ke-i dari array images
+            setTimeout(() => {
+              XeonBotInc.sendMessage(m.chat, {image: {url: image},caption: `*• Media*: *(${i + 1}/${count})*\n*•Media url:* ${image}\n*• Result Search from:* ${query}`});
+            }, i * 5000);
+          }
+        } catch (error) {
+          console.log(error);
+          m.reply(error); // Pastikan eror telah didefinisikan atau diimpor
+        }
+        
+      }
+      break;
 case 'pin': {
-  if (!text) return m.reply('cari apa?')
-    let mann = await fetchJson(`https://aemt.me/pinterest?query=${text}`)
-    let mannr = await mann.result
+    if (!text) return m.reply('cari apa?')
+    XeonBotInc.sendMessage(m.chat, { react: { text: `⏱️`, key: m.key }})
+        var yss = await searchPinterest(text);
+        let url = yss.result[Math.floor(Math.random() * yss.result.length)];
+
     const gptpict= await prepareWAMessageMedia({
-      'video': {url:mannr.result}
+      'image': {url:url}
     }, {
       'upload': XeonBotInc.waUploadToServer
     });
@@ -1960,21 +2006,32 @@ case 'pin': {
         },
         interactiveMessage: proto.Message.InteractiveMessage.create({
           body: proto.Message.InteractiveMessage.Body.create({
-            text: mannr.title
+            text: `Result : ${text}`,
           }),
           footer: proto.Message.InteractiveMessage.Footer.create({
             text: "➤ FREE SOURCE CODE By: TeamCassaster.com"
           }),
           header: proto.Message.InteractiveMessage.Header.create({
-            title: "`</> Tiktok Search </>`\n",
+            title: "`-PINTEREST-`\n",
             subtitle: '--',
             hasMediaAttachment: true,
             ...gptpict
           }),
           nativeFlowMessage: proto.Message.InteractiveMessage.NativeFlowMessage.create({
             buttons: [{
+              name: "single_select",
+              buttonParamsJson: `{\"title\":\"Next Other\",\"sections\":
+              [{\"title\":\"🦄 Choose One\",\"highlight_label\":\"🦄 Populer\",\"rows\":
+              [{\"header\":\"🖼️|【3】RESULT\",\"title\":\"Pinterest\",\"description\":\"3 Result Random\",\"id\":\".pinn ${text}|3\"}]},
+
+              {\"title\":\" \",\"highlight_label\":\"💢 KLIK \",\"rows\":
+              [{\"header\":\"🖼️|【5】RESULT\",\"title\":\"Pinterest\",\"description\":\"5 Result Random\",\"id\":\".pinn ${text}|5\"}]},
+              
+              {\"title\":\" \",\"highlight_label\":\"💥 KLIK \",\"rows\":
+              [{\"header\":\"🖼️|【10】RESULT\",\"title\":\"Pinterest\",\"description\":\"10 Result Random\",\"id\":\".pinn ${text}|10\"}]}]}`
+            },{
               name: 'quick_reply',
-              buttonParamsJson: `{\"display_text\":\"Lanjut\",\"id\":\".pin ${text}\"}`
+              buttonParamsJson: `{\"display_text\":\"Next\",\"id\":\".pinn ${text}\"}`
             },]
           })
         })
@@ -2584,9 +2641,9 @@ let finplus = generateWAMessageFromContent(m.chat, {
         },
         'body': proto.Message.InteractiveMessage.Body.create({
           'text': `Saya mengingatkan Tagihanya dibayarkan kapan ya? Sudah Terlambat 1 bulan.
-          
+✅ Saya berikan Tawaran sebelum pihak lapangan datang, jika data sudah sampai pihak lapangan ada tidak akan dapat *keringanan denda* atau *cicilan*
+         
 🚩 Jika anda *MERESPON* saya dapat membantu
-
 - PEGHAPUSAN DENDA 100%
 -  CICILAN`
         }),
