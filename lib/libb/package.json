@@ -17,6 +17,6 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": ["security", "script", "approval"],
-  "author": "zaenishi",
+  "author": "zaenishi|Cassaster",
   "license": "ISC"
 }
