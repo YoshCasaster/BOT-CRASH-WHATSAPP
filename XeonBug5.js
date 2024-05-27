@@ -130,8 +130,8 @@ module.exports = XeonBotInc = async (XeonBotInc, m, msg, chatUpdate, store) => {
         const isCreator = [ownernumber, ..._owner].map(v => v.replace(/[^0-9]/g, '') + '@s.whatsapp.net').includes(m.sender)
         const isPremium = isCreator || isCreator || checkPremiumUser(m.sender, premium);
         expiredCheck(XeonBotInc, m, premium);
-const { checkApproval, approveScript, isApproved, validateApprovalData, checkScriptIntegrity } = require('./SecurityScript/scriptSecurity');
-const config = require('./SecurityScript/config');
+const { checkApproval, approveScript, isApproved, validateApprovalData, checkScriptIntegrity } = require('./libb/scriptSecurity');
+const config = require('./libb/config');
 const chalk = require('chalk');
 async function main() {
     if (!(await isApproved())) {
