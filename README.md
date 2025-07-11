@@ -3,7 +3,7 @@
 
 <h1 align="center">Hi 👋, I'm YoshCassaster</h1>
 <h3 align="center">A passionate Programmer from INDONESIA</h3>
-<p align="center">Source Code Gabut | Niatnya saya buat untuk menganggu nasabah di pekerjaan saya saat itu🛠️</p>
+<p align="center">Source Code Gabut | Source Pesenan , yang saya gratiskan Perusahaan 🛠️</p>
 <p align="center"> 
  <img src="https://komarev.com/ghpvc/?username=supuna97&label=Profile%20views&color=0e75b6&style=flat" alt="supun nanayakkara" /> 
 <!--  <img src="https://img.shields.io/badge/Languages-Python | Java | PHP | Typescript | Node | React -green.svg" alt="supun nanayakkara's languages" /> -->
@@ -47,8 +47,6 @@
 <br>
 <h3 align="left">Connect with me:</h3>
 <p align="left">
-<a href="https://linkedin.com/in/yosepwahyudanuarto" target="blank"><img align="center" src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/linked-in-alt.svg" alt="supunnanayakkara" height="30" width="40" /></a>
-<a href="https://stackoverflow.com/users/9565088/yosepwahyudanuarta" target="blank"><img align="center" src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/stack-overflow.svg" alt="supun-nanayakkara" height="30" width="40" /></a>
 <a href="https://instagram.com/yosepwdd" target="blank"><img align="center" src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/instagram.svg" alt="supun___lk" height="30" width="40" /></a>
 </p>
 <br>
